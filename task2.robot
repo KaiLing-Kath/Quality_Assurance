@@ -1,6 +1,7 @@
 *** Settings ***
 
 Library  SeleniumLibrary
+Library    String
 Resource    login.robot
 
 *** Variables ***
@@ -51,14 +52,16 @@ Buy rise contract
    
     Click Element    dt_purchase_call_button
     Wait Until Page Contains Element    //*[@class="dc-contract-card"]     30
-sssssss
 Check contract details
     #check underlying
     Element Text Should Be    //*[@id="dc-contract_card_underlying_label"]     Volatility 10 (1s) Index
+
     #check contract type
     Element Text Should Be    //*[@class="dc-contract-type__type-label"]    Rise
+    
     #check buy price
     Element Text Should Be    ${buy_price}     ${stack} 
+
     #check profit
     ${buy}=    Get Text    ${buy_price}
     ${buy}=    Convert To Number    ${buy}    2

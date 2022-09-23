@@ -4,7 +4,6 @@ Library  SeleniumLibrary
 Resource    login.robot
 
 *** Variables ***
-${stack}    10.00
 ${buy_price}    //*[ @class="dc-contract-card-item__header" and text()="Buy price:"]//following-sibling::div[1]
 ${sell_price}    //*[ @class="dc-contract-card-item__header" and text()="Current stake:"]//following-sibling::div[1]
 ${profit}     //*[ @class="dc-contract-card-item__header" and text()="Total profit/loss:"]//following-sibling::div[1]
@@ -28,9 +27,22 @@ Buy Multiplies contract
     Wait Until Page Contains Element     dt_contract_multiplier_item    10
     Click Element    dt_contract_multiplier_item
 
-    #set stake 10; multiply x20; all box not checked; up
+Maximum stake
+    #set stake 2000; multiply x20
+    Set Global Variable    stacke    2000
     Press Keys    //*[@id="dt_amount_input"]    CTRL+A+DELETE
-    Input Text    //*[@id="dt_amount_input"]    ${stack}
+    Input Text    //*[@id="dt_amount_input"]    stake
+    
+    Click Element    dt_purchase_multup_button
+    Wait Until Page Contains Element    //*[@class="dc-contract-card"]     30
+    Sleep    5
+    Click Element    //*[@class="dc-btn dc-btn--secondary dc-btn--sell"]
+
+Minimum stake 
+    #set stake 2000; multiply x20
+    Set Global Variable    stacke    1
+    Press Keys    //*[@id="dt_amount_input"]    CTRL+A+DELETE
+    Input Text    //*[@id="dt_amount_input"]    stake
     
     Click Element    dt_purchase_multup_button
     Wait Until Page Contains Element    //*[@class="dc-contract-card"]     30
@@ -42,7 +54,7 @@ Check contract details
     #check contract type
     Element Text Should Be    //*[@class="dc-contract-type__type-label"]    Up\nx20
     #check buy price
-    Element Text Should Be    ${buy_price}     ${stack} 
+    Element Text Should Be    ${buy_price}     stake 
     #check profit
     ${buy}=    Get Text    ${buy_price}
     ${buy}=    Convert To Number    ${buy}    2
@@ -65,5 +77,11 @@ Select Volatility 50 Index
     Select Volatility 50 Index
 Buy Multiplies contract
     Buy Multiplies contract
+Maximum stake
+    Maximum stake
+Check contract details
+    Check contract details
+Maximum stake
+    Maximum stake
 Check contract details
     Check contract details
