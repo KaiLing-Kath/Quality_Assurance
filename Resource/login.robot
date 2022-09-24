@@ -3,8 +3,8 @@
 Library    SeleniumLibrary
 
 *** Variables ***
-${email}    kai.ling+2@besquare.com.my
-${password}    abcD1234 
+${email}   abcd@gmail.com
+${password}    ******** 
 ${input_box_for_email}    //input[@type='email'] 
 ${input_box_for_password}   //input[@type='password'] 
 
