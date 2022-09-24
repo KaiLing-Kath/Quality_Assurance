@@ -1,9 +1,12 @@
+#Project 1: Automation on API token page
+
 *** Settings ***
 
 Library  SeleniumLibrary
-Resource    login.robot
+Resource    ../Resource/login.robot
 
 *** Variables ***
+
 ${acct_setting_icon}    //*[@class="account-settings-toggle"]
 ${personal_details_tab_active}    //*[@id="dc_personal-details_link" and contains(@class,"--active")]
 ${personal_details_content}    //*[@class="account-form account-form__personal-details"]
@@ -68,13 +71,13 @@ Select All Scopes
 Test Case 2
 #Test if account setting clickable 
     Click Element    ${acct_setting_icon} 
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Page Should Contain Element    ${personal_details_tab_active}
     Page Should Contain Element    ${personal_details_content} 
 Test Case 3
-#Check whether the “API token” is selected
+#Test if the “API token” tab is clickable
     Click Element     ${api_token_tab}
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Page Should Contain Element     ${api_token_tab_active}
     Page Should Contain Element     ${api_token_content}
 Test Case 4
@@ -138,12 +141,12 @@ Test Case 8
 Test Case 9
     #Test if the token is created
     Reload Page
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Select All Scopes
     Input Text    ${token_name_input_box}    ${valid_token_name_2}
     Wait Until Page Contains Element    ${Create_btn_enabled}   30
     Click Element    ${Create_btn_enabled}
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Page Should Contain Element    ${token_list}
     
 Test Case 10
@@ -162,20 +165,20 @@ Test Case 12
     #Test if the created token’s “copy” icon is clickable
     Click Element    ${copy_icon} 
 Test Case 13
-    #Check whether there is any popup window after “copy” icon is click 
+    #Check whether there is any popup window after “copy” icon is clicked 
     Wait Until Page Contains Element    ${popup_for_copy}    10
 Test Case 14
-    #Check if after “OK” button is click is there any message show that token is copied
+    #Check if after “OK” button is clicked is there any message show that token is copied
     Click Element    ${ok_btn_in_copy_popup}
     Wait Until Page Contains Element    ${token_copied_msg}    30
 Test Case 15
     #Test if the created token’s “hidden” icon is clickable
     Click Element    ${hidden_icon}
 Test Case 16
-    #Check whether the token value is show after “hidden” icon is click once 
+    #Check whether the token value is shown after “hidden” icon is clicked once 
     Wait Until Page Does Not Contain Element    ${hidden_token}    10
 Test Case 17
-    #Check whether the token value is hide after “hidden” icon is click twice 
+    #Check whether the token value is hided after “hidden” icon is clicked twice  
     Click Element    ${hidden_icon}
     Wait Until Page Contains Element    ${hidden_token}    10
 Test Case 18
@@ -185,17 +188,17 @@ Test Case 19
     #Check whether there is any popup window after “delete” icon is click 
     Wait Until Page Contains Element    ${popup_for_delete}    10
 Test Case 20
-    #Test if after “Cancel” button is click is the token not deleted 
+    #Test if after “Cancel” button is clicked,  is the token not deleted 
     Click Element    ${cancel_btn_in_delete_popup}
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Page Should Contain Element    ${created_token_name}
     
 Test Case 21
-    #Test if after “Yes, delete” button is click is the token deleted 
+    #Test if after “Yes, delete” button is clicked, is the token deleted  
     Click Element    ${delete_icon} 
     Wait Until Page Contains Element    ${popup_for_delete}    10
     Click Element    ${yes_btn_in_delete_popup} 
-    Wait Until Page Does Not Contain Element   ${loading_interface}    30
+    Wait For Page To Complete Loading
     Page Should Not Contain Element    ${created_token_name}
 
 *** Test Cases ***
@@ -207,7 +210,7 @@ Test Case 2
     #Test if account setting clickable 
     Test case 2
 Test Case 3
-    #Check whether the “API token” is selected
+    #Test if the “API token” tab is clickable
     Test case 3
 
 Test Case 4 To 11
